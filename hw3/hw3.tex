@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphicx}
+
+\title{HW3: Fourier Transform Proofs}
+\author{Yumin Chiang}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Proof of Inverse Fourier Transform}
+We want to prove the following inverse Fourier transform formula:
+\begin{equation}
+    \psi(x) = \int_{\mathbb{R}^K} \Psi(f) e^{j 2\pi f^T x} df.
+\end{equation}
+
+From the lecture notes (page 10), we use the result:
+\begin{equation}
+    \int_{-\infty}^{\infty} e^{j 2\pi f_0 x} dx = \delta(f_0),
+\end{equation}
+where $\delta(f_0)$ is the Dirac delta function.
+
+Taking the Fourier transform definition:
+\begin{equation}
+    \Psi(f) = \int_{\mathbb{R}^K} \psi(x) e^{-j 2\pi f^T x} dx,
+\end{equation}
+we substitute this into our equation:
+\begin{align*}
+    \int_{\mathbb{R}^K} \Psi(f) e^{j 2\pi f^T x} df &= \int_{\mathbb{R}^K} \left( \int_{\mathbb{R}^K} \psi(y) e^{-j 2\pi f^T y} dy \right) e^{j 2\pi f^T x} df.
+\end{align*}
+Interchanging the order of integration:
+\begin{equation}
+    \int_{\mathbb{R}^K} \psi(y) \left( \int_{\mathbb{R}^K} e^{-j 2\pi f^T y} e^{j 2\pi f^T x} df \right) dy.
+\end{equation}
+Using the result $\int e^{j 2\pi f (x-y)} df = \delta(x-y)$, we obtain:
+\begin{equation}
+    \psi(x) = \int_{\mathbb{R}^K} \psi(y) \delta(x-y) dy = \psi(x),
+\end{equation}
+which completes the proof.
+
+\section{Proof of Convolution Theorem}
+We aim to prove:
+\begin{equation}
+    \phi(x) = \psi(x) \ast h(x) \leftrightarrow \Phi(f) = \Psi(f) H(f).
+\end{equation}
+
+By definition, the convolution is:
+\begin{equation}
+    \phi(x) = (\psi \ast h)(x) = \int_{\mathbb{R}^K} \psi(y) h(x-y) dy.
+\end{equation}
+
+Taking the Fourier transform:
+\begin{align*}
+    \Phi(f) &= \int_{\mathbb{R}^K} \phi(x) e^{-j 2\pi f^T x} dx \\
+    &= \int_{\mathbb{R}^K} \left( \int_{\mathbb{R}^K} \psi(y) h(x-y) dy \right) e^{-j 2\pi f^T x} dx.
+\end{align*}
+Interchanging the order of integration:
+\begin{equation}
+    \int_{\mathbb{R}^K} \psi(y) \left( \int_{\mathbb{R}^K} h(x-y) e^{-j 2\pi f^T x} dx \right) dy.
+\end{equation}
+Using the substitution $u = x - y$, we get:
+\begin{equation}
+    \int_{\mathbb{R}^K} \psi(y) e^{-j 2\pi f^T y} \left( \int_{\mathbb{R}^K} h(u) e^{-j 2\pi f^T u} du \right) dy.
+\end{equation}
+Recognizing the Fourier transforms, we obtain:
+\begin{equation}
+    \Phi(f) = \Psi(f) H(f),
+\end{equation}
+which completes the proof.
+
+\section{Conclusion}
+These proofs establish the fundamental properties of Fourier analysis, specifically the inverse transform and the convolution theorem. The mind-maps should illustrate these derivations clearly.
+
+\end{document}
