@@ -30,6 +30,17 @@ class FourierTransformer():
         
         # TODO #3: Implement 3D fourier transform for output_signal according to the DSFT formulas provided in the slides.
         # You are NOT ALLOWED to use any third party API to execute the Fourier transform 
+        # Compute 3D DFT manually
+        for k1 in range(height):
+            for k2 in range(width):
+                for k3 in range(frames):
+                    sum_val = 0
+                    for n1 in range(height):
+                        for n2 in range(width):
+                            for n3 in range(frames):
+                                exponent = -2j * np.pi * ((k1 * n1 / height) + (k2 * n2 / width) + (k3 * n3 / frames))
+                                sum_val += input_signal[n1, n2, n3] * np.exp(exponent)
+                    output_signal[k1, k2, k3] = sum_val
 
         return output_signal
 
@@ -48,5 +59,16 @@ class FourierTransformer():
         
         # TODO #4: Implement 3D inverse Fourier transform for output_signal according to the IDSFT formulas provided in the slides.
         # You are NOT ALLOWED to use any third party API to execute the inverse Fourier transform 
+        # Compute 3D Inverse DFT manually
+        for n1 in range(height):
+            for n2 in range(width):
+                for n3 in range(frames):
+                    sum_val = 0
+                    for k1 in range(height):
+                        for k2 in range(width):
+                            for k3 in range(frames):
+                                exponent = 2j * np.pi * ((k1 * n1 / height) + (k2 * n2 / width) + (k3 * n3 / frames))
+                                sum_val += input_signal[k1, k2, k3] * np.exp(exponent)
+                    output_signal[n1, n2, n3] = sum_val / (height * width * frames)  # Normalize
 
         return output_signal
