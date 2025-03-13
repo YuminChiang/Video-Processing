@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.2) (preloaded format=pdflatex 2025.3.9)  11 MAR 2025 18:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.2) (preloaded format=pdflatex 2025.3.9)  13 MAR 2025 19:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./main.tex
-(main.tex
+**./hw3.tex
+(hw3.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (C:\Users\YuminChiang\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -144,8 +144,8 @@ nd-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count282
 \l__pdf_internal_box=\box54
-) (main.aux)
-\openout1 = `main.aux'.
+) (hw3.aux)
+\openout1 = `hw3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
@@ -203,7 +203,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {C:/Users/YuminChiang/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 
-[2] (main.aux)
+[2] (hw3.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -211,12 +211,12 @@ L3 programming layer <2025-01-18>
  ) 
 Here is how much of TeX's memory you used:
  2540 strings out of 473523
- 37298 string characters out of 5711727
- 425218 words of memory out of 5000000
+ 37421 string characters out of 5711727
+ 425207 words of memory out of 5000000
  25769 multiletter control sequences out of 15000+600000
  566085 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,10n,65p,225b,220s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,10n,65p,201b,220s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/YuminChiang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx12.pfb><C:/Users/YuminChiang/AppData/Local/Programs/MiKTeX/fonts/type
 1/public/amsfonts/cm/cmex10.pfb><C:/Users/YuminChiang/AppData/Local/Programs/Mi
@@ -233,7 +233,7 @@ Chiang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
 <C:/Users/YuminChiang/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
 /cm/cmsy7.pfb><C:/Users/YuminChiang/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (2 pages, 140550 bytes).
+Output written on hw3.pdf (2 pages, 140109 bytes).
 PDF statistics:
  74 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
