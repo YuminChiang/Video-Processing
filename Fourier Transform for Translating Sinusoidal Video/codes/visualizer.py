@@ -3,7 +3,7 @@ import numpy as np
 from camera import *
 
 def visualize_spatial_temporal_signal(filename, signal, width, height, fps, intv):
-    fourcc=cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video = cv2.VideoWriter(filename, fourcc, fps, (width, height))
     image = np.zeros([height, width, 3], dtype = np.uint8)
 

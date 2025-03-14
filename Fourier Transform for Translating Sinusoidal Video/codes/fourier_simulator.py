@@ -98,6 +98,14 @@ resized_height, resized_width, frames = frequency_signal.shape[0], frequency_sig
 shifted_frequency_signal = np.zeros([resized_height, resized_width, frames], dtype=complex)
 # TODO #2: Implement a shifting operation to move the frequency responses. The shifted responses are stored in
 # shifted_frequency_signal
+for k1 in range(resized_height):
+    for k2 in range(resized_width):
+        for k3 in range(frames):
+            shifted_frequency_signal[k1, k2, k3] = frequency_signal[k1, k2, k3] * np.exp(-2j * np.pi * (
+                    (dx * k1 / resized_height) +
+                    (dy * k2 / resized_width) +
+                    (dt * k3 / frames)
+                ))
 
 # Viz for Shifted Frequency signal 
 visualize_frequency_signal(folder_out + '/shifted_frequency.mp4', shifted_frequency_signal, width, height, fps, intv)
