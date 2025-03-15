@@ -31,6 +31,12 @@ def load_signal(filepath, signal_shape):
         vals = content.split()
         while len(vals) > 0:
             # TODO #1: Implement the file loading to load the cached content into signal 
+            fy = int(vals[3])
+            fx = int(vals[2])
+            ft = int(vals[4])
+            response_real = float(vals[0])
+            response_imag = float(vals[1])
+            signal[fy,fx,ft] = complex(response_real,response_imag)
             vals = vals[5:]
     return signal
 
