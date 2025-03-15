@@ -101,11 +101,18 @@ shifted_frequency_signal = np.zeros([resized_height, resized_width, frames], dty
 for k1 in range(resized_height):
     for k2 in range(resized_width):
         for k3 in range(frames):
-            shifted_frequency_signal[k1, k2, k3] = frequency_signal[k1, k2, k3] * np.exp(-2j * np.pi * (
-                    (dx * k1 / resized_height) +
-                    (dy * k2 / resized_width) +
-                    (dt * k3 / frames)
-                ))
+            u = k1 if k1 < resized_height // 2 else k1 - resized_height
+            v = k2 if k2 < resized_width // 2 else k2 - resized_width
+            t = k3 if k3 < frames // 2 else k3 - frames
+
+            phase_shift = np.exp(-2j * np.pi * (
+                (dx * u / resized_height) +
+                (dy * v / resized_width) +
+                (dt * t / frames)
+            ))
+
+            shifted_frequency_signal[k1, k2, k3] = frequency_signal[k1, k2, k3] * phase_shift
+
 
 # Viz for Shifted Frequency signal 
 visualize_frequency_signal(folder_out + '/shifted_frequency.mp4', shifted_frequency_signal, width, height, fps, intv)
