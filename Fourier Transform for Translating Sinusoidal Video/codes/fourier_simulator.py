@@ -2,6 +2,7 @@ from sinusoidal_pattern_generator import *
 from fourier_transformer import *
 from visualizer import *
 import os.path
+import time
 
 # Create output folder
 folder_out = "results"
@@ -66,7 +67,11 @@ xformer = FourierTransformer()
 
 # Compute frequency response
 print('Computing Fourier transform for the sinusoidal signal...')
+start_time = time.time()
 frequency_signal = xformer.dft_video(spatial_temporal_signal)
+end_time = time.time()
+print(f"Computation time: {end_time - start_time:.4f} sec")
+
 
 # Cache the results for testing or debugging
 cache_signal(folder_out + '/frequency.sg', frequency_signal)
@@ -81,7 +86,10 @@ visualize_frequency_signal(folder_out + '/frequency_response.mp4', frequency_sig
 
 # Reconstruct spatial temporal signal via inverse fourier transform
 print('Recovering the spatial temporal signal by inverse Fourier transform...')
+start_time = time.time()
 recovered_signal = xformer.idft(frequency_signal)
+end_time = time.time()
+print(f"Computation time: {end_time - start_time:.4f} sec")
 
 # Cache reconstructed signal
 cache_signal(folder_out + '/reconstruction.sg', recovered_signal)
@@ -98,21 +106,7 @@ resized_height, resized_width, frames = frequency_signal.shape[0], frequency_sig
 shifted_frequency_signal = np.zeros([resized_height, resized_width, frames], dtype=complex)
 # TODO #2: Implement a shifting operation to move the frequency responses. The shifted responses are stored in
 # shifted_frequency_signal
-for k1 in range(resized_height):
-    for k2 in range(resized_width):
-        for k3 in range(frames):
-            u = k1 if k1 < resized_height // 2 else k1 - resized_height
-            v = k2 if k2 < resized_width // 2 else k2 - resized_width
-            t = k3 if k3 < frames // 2 else k3 - frames
-
-            phase_shift = np.exp(-2j * np.pi * (
-                (dx * u / resized_height) +
-                (dy * v / resized_width) +
-                (dt * t / frames)
-            ))
-
-            shifted_frequency_signal[k1, k2, k3] = frequency_signal[k1, k2, k3] * phase_shift
-
+shifted_frequency_signal = np.roll(frequency_signal, shift=(dy, dx, dt), axis=(0, 1, 2))
 
 # Viz for Shifted Frequency signal 
 visualize_frequency_signal(folder_out + '/shifted_frequency.mp4', shifted_frequency_signal, width, height, fps, intv)

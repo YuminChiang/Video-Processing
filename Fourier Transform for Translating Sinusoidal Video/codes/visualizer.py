@@ -65,7 +65,20 @@ def visualize_viewed_signal(filename, signal, width, height, fps, intv, w_mm, h_
                         r = y 
 
                         # TODO #5: Update projected position on the viewer
+                        pixel_x_per_mm = width / w_mm
+                        # from dimension to mm 
+                        pixel_x_per_mm = width / w_mm
+                        pixel_y_per_mm = height / h_mm
 
+                        x_mm = x / pixel_x_per_mm
+                        y_mm = y / pixel_y_per_mm
+                        X = np.array([x_mm - w_mm / 2, y_mm - h_mm / 2, d_mm])
+
+                        # projection
+                        projected_pos = viewer.project_to_image_position(X)
+                        c = projected_pos[0]
+                        r = projected_pos[1]
+                        
                         # Dump to signal if current frame is filled. 
                         if (f > f_viz):
                             video.write(image)
@@ -88,12 +101,12 @@ def compute_response_magnitudes(frequency_signal):
             for fx in range(width):
                 response_real = frequency_signal.real[fy, fx, ft]
                 response_imag = frequency_signal.imag[fy, fx, ft]
-                magnitudes[fy, fx, ft] = np.sqrt(np.pow(response_real, 2) + np.pow(response_imag, 2)) 
+                magnitudes[fy, fx, ft] = np.sqrt(np.power(response_real, 2) + np.power(response_imag, 2)) 
     min_mag, max_mag = np.min(magnitudes), np.max(magnitudes)
     return magnitudes, min_mag, max_mag
 
 def visualize_frequency_signal(filename, signal, width, height, fps, intv):
-    fourcc=cv2.VideoWriter_fourcc(*'mp4v')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video = cv2.VideoWriter(filename, fourcc, fps, (width, height))
     image = np.zeros([height, width, 3], dtype=np.uint8)
 

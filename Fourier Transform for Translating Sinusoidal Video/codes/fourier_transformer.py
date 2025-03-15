@@ -30,25 +30,25 @@ class FourierTransformer():
         
         # TODO #3: Implement 3D fourier transform for output_signal according to the DSFT formulas provided in the slides.
         # You are NOT ALLOWED to use any third party API to execute the Fourier transform 
-        # Compute 3D DFT manually
-        # for k1 in range(height):
-        #     for k2 in range(width):
-        #         for k3 in range(frames):
+        # for fx in range(height):
+        #     for fy in range(width):
+        #         for ft in range(frames):
         #             sum_val = 0
-        #             for n1 in range(height):
-        #                 for n2 in range(width):
-        #                     for n3 in range(frames):
-        #                         exponent = -2j * np.pi * ((k1 * n1 / height) + (k2 * n2 / width) + (k3 * n3 / frames))
-        #                         sum_val += input_signal[n1, n2, n3] * np.exp(exponent)
-        #             output_signal[k1, k2, k3] = sum_val
-        for k1 in range(height):
-            for k2 in range(width):
-                for k3 in range(frames):
-                    output_signal[k1, k2, k3] = np.sum(
+        #             for x in range(height):
+        #                 for y in range(width):
+        #                     for t in range(frames):
+        #                         exponent = -2j * np.pi * ((fx * x / height) + (fy * y / width) + (ft * t / frames))
+        #                         sum_val += input_signal[x, y, t] * np.exp(exponent)
+        #             output_signal[fx, fy, ft] = sum_val
+        
+        for fx in range(height):
+            for fy in range(width):
+                for ft in range(frames):
+                    output_signal[fx, fy, ft] = np.sum(
                         input_signal * np.exp(-2j * np.pi * (
-                            (k1 * np.arange(height)[:, None, None] / height) +
-                            (k2 * np.arange(width)[None, :, None] / width) +
-                            (k3 * np.arange(frames)[None, None, :] / frames)
+                            (fx * np.arange(height)[:, None, None] / height) +
+                            (fy * np.arange(width)[None, :, None] / width) +
+                            (ft * np.arange(frames)[None, None, :] / frames)
                         ))
                     )
 
@@ -69,25 +69,24 @@ class FourierTransformer():
         
         # TODO #4: Implement 3D inverse Fourier transform for output_signal according to the IDSFT formulas provided in the slides.
         # You are NOT ALLOWED to use any third party API to execute the inverse Fourier transform 
-        # Compute 3D Inverse DFT manually
-        # for n1 in range(height):
-        #     for n2 in range(width):
-        #         for n3 in range(frames):
+        # for x in range(height):
+        #     for y in range(width):
+        #         for t in range(frames):
         #             sum_val = 0
-        #             for k1 in range(height):
-        #                 for k2 in range(width):
-        #                     for k3 in range(frames):
-        #                         exponent = 2j * np.pi * ((k1 * n1 / height) + (k2 * n2 / width) + (k3 * n3 / frames))
-        #                         sum_val += input_signal[k1, k2, k3] * np.exp(exponent)
-        #             output_signal[n1, n2, n3] = sum_val / (height * width * frames)  # Normalize
-        for n1 in range(height):
-            for n2 in range(width):
-                for n3 in range(frames):
-                    output_signal[n1, n2, n3] = np.sum(
+        #             for fx in range(height):
+        #                 for fy in range(width):
+        #                     for ft in range(frames):
+        #                         exponent = 2j * np.pi * ((fx * x / height) + (fy * y / width) + (ft * t / frames))
+        #                         sum_val += input_signal[fx, fy, ft] * np.exp(exponent)
+        #             output_signal[x, y, t] = sum_val / (height * width * frames) # Normalize
+        for x in range(height):
+            for y in range(width):
+                for t in range(frames):
+                    output_signal[x, y, t] = np.sum(
                         input_signal * np.exp(2j * np.pi * (
-                            (n1 * np.arange(height)[:, None, None] / height) +
-                            (n2 * np.arange(width)[None, :, None] / width) +
-                            (n3 * np.arange(frames)[None, None, :] / frames)
+                            (x * np.arange(height)[:, None, None] / height) +
+                            (y * np.arange(width)[None, :, None] / width) +
+                            (t * np.arange(frames)[None, None, :] / frames)
                         ))
                     ) / (height * width * frames)
 
