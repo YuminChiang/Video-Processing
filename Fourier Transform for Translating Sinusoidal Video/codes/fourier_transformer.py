@@ -40,7 +40,6 @@ class FourierTransformer():
         #                         exponent = -2j * np.pi * ((fx * x / height) + (fy * y / width) + (ft * t / frames))
         #                         sum_val += input_signal[x, y, t] * np.exp(exponent)
         #             output_signal[fx, fy, ft] = sum_val
-        
         for fx in range(height):
             for fy in range(width):
                 for ft in range(frames):
