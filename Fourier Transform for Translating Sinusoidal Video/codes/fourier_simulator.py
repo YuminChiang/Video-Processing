@@ -112,6 +112,16 @@ resized_height, resized_width, frames = frequency_signal.shape[0], frequency_sig
 shifted_frequency_signal = np.zeros([resized_height, resized_width, frames], dtype=complex)
 # TODO #2: Implement a shifting operation to move the frequency responses. The shifted responses are stored in
 # shifted_frequency_signal
+# for y in range(resized_height):    # Iterate over height (y-axis)
+#     for x in range(resized_width): # Iterate over width (x-axis)
+#         for t in range(frames):    # Iterate over frames (time-axis)
+#             # Compute the source indices with wrapping (circular shift)
+#             src_y = (y - dy) % resized_height  # Shift in height (y) direction
+#             src_x = (x - dx) % resized_width   # Shift in width (x) direction
+#             src_t = (t - dt) % frames          # Shift in time (t) direction
+            
+#             # Copy the value from the source position to the destination
+#             shifted_frequency_signal[y, x, t] = frequency_signal[src_y, src_x, src_t]
 shifted_frequency_signal = np.roll(frequency_signal, shift=(dy, dx, dt), axis=(0, 1, 2))
 
 # Viz for Shifted Frequency signal 
