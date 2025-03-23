@@ -65,6 +65,18 @@ def visualize_viewed_signal(filename, signal, width, height, fps, intv, w_mm, h_
                         r = y 
 
                         # TODO #5: Update projected position on the viewer
+                        pixel_x_per_mm = width / w_mm
+                        # from dimension to mm 
+                        pixel_x_per_mm = width / w_mm
+                        pixel_y_per_mm = height / h_mm
+
+                        x_mm = x / pixel_x_per_mm
+                        y_mm = y / pixel_y_per_mm
+                        X_3d = np.array([x_mm - w_mm / 2, y_mm - h_mm / 2, d_mm])
+
+                        # projection
+                        projected_pos = viewer.project_to_image_position(X_3d)
+                        c, r = projected_pos[0], projected_pos[1]
 
                         # Dump to signal if current frame is filled. 
                         if (f > f_viz):
