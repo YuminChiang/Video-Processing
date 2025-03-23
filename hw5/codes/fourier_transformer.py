@@ -194,12 +194,14 @@ class FourierTransformer():
         even_fft = self.fft(even_indices)
         odd_fft = self.fft(odd_indices)
 
-        # twiddle factor: W_M^u = e^(-j 2π u / M)
-        half_samples = num_samples // 2
+        # twiddle factor: W_M^u = e^(-j * 2π * u / M)
+        half_samples = num_samples // 2 # num_samples = 2 * half_samples i.e., M = 2K <-> K = M / 2
         twiddle = np.exp(-2j * np.pi * np.arange(half_samples) / num_samples)
 
-        output_signal[0:half_samples] = even_fft + twiddle * odd_fft
-        output_signal[half_samples:num_samples] = even_fft - twiddle * odd_fft
+        # Ψ(u)      = even_fft(u) + odd_fft(u) * twiddle(u) 
+        # Ψ(u + K)  = even_fft(u) - odd_fft(u) * twiddle(u) 
+        output_signal[0:half_samples] = even_fft + odd_fft * twiddle 
+        output_signal[half_samples:num_samples] = even_fft - odd_fft * twiddle 
 
         return output_signal
 
