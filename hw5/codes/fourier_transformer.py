@@ -179,8 +179,10 @@ class FourierTransformer():
 
         # TODO #4: Implement the successive doubling method provided in the course slides 
         # Note that the number of samples should be power of 2 (handle the signal shape before calling this API)
-        if not (num_samples > 0 and (num_samples & (num_samples - 1)) == 0):
-            raise ValueError("Number of samples must be a power of 2 for successive doubling FFT")
+        if num_samples & (num_samples - 1) != 0:
+            next_pow2 = 1 << (num_samples - 1).bit_length()
+            input_signal = np.pad(input_signal, (0, next_pow2 - num_samples), mode='constant')
+            num_samples = input_signal.shape[0]
 
         if num_samples == 1:
             output_signal[0] = input_signal[0]
