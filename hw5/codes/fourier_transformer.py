@@ -198,8 +198,8 @@ class FourierTransformer():
         half_samples = num_samples // 2 # num_samples = 2 * half_samples i.e., M = 2K <-> K = M / 2
         twiddle = np.exp(-2j * np.pi * np.arange(half_samples) / num_samples)
 
-        # Ψ(u)      = even_fft(u) + odd_fft(u) * twiddle(u) 
-        # Ψ(u + K)  = even_fft(u) - odd_fft(u) * twiddle(u) 
+        # Ψ(u)      = Ψ_even(u) + Ψ_odd(u) * twiddle(u) 
+        # Ψ(u + K)  = Ψ_even(u) - Ψ_odd(u) * twiddle(u) 
         output_signal[0:half_samples] = even_fft + odd_fft * twiddle 
         output_signal[half_samples:num_samples] = even_fft - odd_fft * twiddle 
 
