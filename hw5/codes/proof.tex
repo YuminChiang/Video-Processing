@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section*{Proof: 3D DFT and IDFT can be computed by multi-pass 1D DFTs}
+
+We begin with the 3D DFT definition:
+
+\[
+\Psi(f_x, f_y, f_t) = \sum_{x=0}^{w-1} \sum_{y=0}^{h-1} \sum_{t=0}^{n-1} \psi(x, y, t) \cdot e^{-j 2\pi \left( \frac{f_x x}{w} + \frac{f_y y}{h} + \frac{f_t t}{n} \right)}
+\]
+
+Because the exponential is separable, we can factor it:
+
+\[
+= \sum_{x=0}^{w-1} \sum_{y=0}^{h-1} \sum_{t=0}^{n-1} \psi(x, y, t) \cdot
+e^{-j 2\pi \frac{f_t t}{n}} \cdot
+e^{-j 2\pi \frac{f_y y}{h}} \cdot
+e^{-j 2\pi \frac{f_x x}{w}}
+\]
+
+Rewriting the summation order by ppt:
+
+\[
+= \sum_{x=0}^{w-1} e^{-j 2\pi \frac{f_x x}{w}} 
+\sum_{y=0}^{h-1} e^{-j 2\pi \frac{f_y y}{h}} 
+\sum_{t=0}^{n-1} \psi(x, y, t) \cdot e^{-j 2\pi \frac{f_t t}{n}}
+\]
+
+We now define intermediate terms:
+
+\begin{align*}
+\psi_1(x, y, f_t) &= \sum_{t=0}^{n-1} \psi(x, y, t) \cdot e^{-j 2\pi \frac{f_t t}{n}} \\
+\psi_2(x, f_y, f_t) &= \sum_{y=0}^{h-1} \psi_1(x, y, f_t) \cdot e^{-j 2\pi \frac{f_y y}{h}} \\
+\Psi(f_x, f_y, f_t) &= \sum_{x=0}^{w-1} \psi_2(x, f_y, f_t) \cdot e^{-j 2\pi \frac{f_x x}{w}}
+\end{align*}
+
+\subsection*{Conclusion (DFT)}
+
+Thus, the 3D DFT can be computed as three passes of 1D DFT:
+\[
+\psi(x, y, t) \xrightarrow{\text{1D DFT along } t} \psi_1(x, y, f_t)
+\xrightarrow{\text{1D DFT along } y} \psi_2(x, f_y, f_t)
+\xrightarrow{\text{1D DFT along } x} \Psi(f_x, f_y, f_t)
+\]
+
+\bigskip
+
+Now consider the 3D inverse DFT:
+
+\[
+\psi(x, y, t) = \frac{1}{whn} \sum_{f_x=0}^{w-1} \sum_{f_y=0}^{h-1} \sum_{f_t=0}^{n-1} \Psi(f_x, f_y, f_t) \cdot e^{j 2\pi \left( \frac{f_x x}{w} + \frac{f_y y}{h} + \frac{f_t t}{n} \right)}
+\]
+
+This is also separable:
+
+\[
+= \frac{1}{whn} \sum_{f_x=0}^{w-1} e^{j 2\pi \frac{f_x x}{w}}
+\sum_{f_y=0}^{h-1} e^{j 2\pi \frac{f_y y}{h}}
+\sum_{f_t=0}^{n-1} \Psi(f_x, f_y, f_t) \cdot e^{j 2\pi \frac{f_t t}{n}}
+\]
+
+Define intermediate terms for IDFT:
+
+\begin{align*}
+\Psi_1(f_x, f_y, t) &= \sum_{f_t=0}^{n-1} \Psi(f_x, f_y, f_t) \cdot e^{j 2\pi \frac{f_t t}{n}} \\
+\Psi_2(f_x, y, t) &= \sum_{f_y=0}^{h-1} \Psi_1(f_x, f_y, t) \cdot e^{j 2\pi \frac{f_y y}{h}} \\
+\psi(x, y, t) &= \frac{1}{whn} \sum_{f_x=0}^{w-1} \Psi_2(f_x, y, t) \cdot e^{j 2\pi \frac{f_x x}{w}}
+\end{align*}
+
+\subsection*{Conclusion (IDFT)}
+
+3D IDFT can also be computed by three successive 1D IDFTs:
+\[
+\Psi(f_x, f_y, f_t) \xrightarrow{\text{1D IDFT along } f_t} \Psi_1(f_x, f_y, t)
+\xrightarrow{\text{1D IDFT along } f_y} \Psi_2(f_x, y, t)
+\xrightarrow{\text{1D IDFT along } f_x} \psi(x, y, t)
+\]
+
+\end{document}
