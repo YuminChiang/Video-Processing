@@ -100,7 +100,7 @@ def compute_response_magnitudes(frequency_signal):
             for fx in range(width):
                 response_real = frequency_signal.real[fy, fx, ft]
                 response_imag = frequency_signal.imag[fy, fx, ft]
-                magnitudes[fy, fx, ft] = np.sqrt(np.pow(response_real, 2) + np.pow(response_imag, 2)) 
+                magnitudes[fy, fx, ft] = np.sqrt(np.power(response_real, 2) + np.power(response_imag, 2)) 
     min_mag, max_mag = np.min(magnitudes), np.max(magnitudes)
     return magnitudes, min_mag, max_mag
 

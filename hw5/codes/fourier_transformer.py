@@ -62,15 +62,15 @@ class FourierTransformer():
 
         for fx in range(height):
             for fy in range(width):
-                output_signal[fx, fy, :] = self.fft_numpy(output_signal[fx, fy, :])
+                output_signal[fx, fy, :] = self.fft_numpy(output_signal[fx, fy, :], fft_numpy=True)
 
         for fx in range(height):
             for ft in range(frames):
-                output_signal[fx, :, ft] = self.fft_numpy(output_signal[fx, :, ft])
+                output_signal[fx, :, ft] = self.fft_numpy(output_signal[fx, :, ft], fft_numpy=True)
 
         for fy in range(width):
             for ft in range(frames):
-                output_signal[:, fy, ft] = self.fft_numpy(output_signal[:, fy, ft])
+                output_signal[:, fy, ft] = self.fft_numpy(output_signal[:, fy, ft], fft_numpy=True)
 
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=2, arr=output_signal) # time axis
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=1, arr=output_signal) # width axis
@@ -126,15 +126,15 @@ class FourierTransformer():
 
         for x in range(height):
             for y in range(width):
-                output_signal[x, y, :] = self.fft_numpy(output_signal[x, y, :])
+                output_signal[x, y, :] = self.fft_numpy(output_signal[x, y, :], fft_numpy=True)
 
         for x in range(height):
             for t in range(frames):
-                output_signal[x, :, t] = self.fft_numpy(output_signal[x, :, t])
+                output_signal[x, :, t] = self.fft_numpy(output_signal[x, :, t], fft_numpy=True)
 
         for y in range(width):
             for t in range(frames):
-                output_signal[:, y, t] = self.fft_numpy(output_signal[:, y, t])
+                output_signal[:, y, t] = self.fft_numpy(output_signal[:, y, t], fft_numpy=True)
         
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=2, arr=output_signal)  # time axis
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=1, arr=output_signal)  # width axis
@@ -151,15 +151,21 @@ class FourierTransformer():
     Outputs:
         - output_signal: 1D numpy array with complex numbers.
     '''
-    def fft_numpy(self, input_signal):
+    def fft_numpy(self, input_signal, fft_numpy=False):
         # Get number of samples of the input_signal.
         num_samples = input_signal.real.shape[0] 
 
         # Get frequency response by computing fourier dft on the input signals
         output_signal = np.zeros(num_samples, dtype=complex)
 
-        # TODO #3: Incorporate numpy fft.fft API for the fast 1D DFT 
-        output_signal = np.fft.fft(input_signal)
+        # TODO #3: Incorporate numpy fft.fft API for the fast 1D DFT
+        if fft_numpy:
+            output_signal = np.fft.fft(input_signal)
+        else:
+            if num_samples & (num_samples - 1) != 0:
+                next_pow2 = 1 << (num_samples - 1).bit_length()
+                input_signal = np.pad(input_signal, (0, next_pow2 - num_samples), mode='constant')
+            output_signal = self.fft(input_signal)[:num_samples]
 
         return output_signal
 
@@ -179,11 +185,6 @@ class FourierTransformer():
 
         # TODO #4: Implement the successive doubling method provided in the course slides 
         # Note that the number of samples should be power of 2 (handle the signal shape before calling this API)
-        if num_samples & (num_samples - 1) != 0:
-            next_pow2 = 1 << (num_samples - 1).bit_length()
-            input_signal = np.pad(input_signal, (0, next_pow2 - num_samples), mode='constant')
-            num_samples = input_signal.shape[0]
-
         if num_samples == 1:
             output_signal[0] = input_signal[0]
             return output_signal
@@ -204,6 +205,4 @@ class FourierTransformer():
         output_signal[half_samples:num_samples] = even_fft - odd_fft * twiddle 
 
         return output_signal
-
-
 
