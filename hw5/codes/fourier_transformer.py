@@ -62,15 +62,15 @@ class FourierTransformer():
 
         for fx in range(height):
             for fy in range(width):
-                output_signal[fx, fy, :] = self.fft_numpy(output_signal[fx, fy, :], fft_numpy=True)
+                output_signal[fx, fy, :] = self.fft_numpy(output_signal[fx, fy, :])
 
         for fx in range(height):
             for ft in range(frames):
-                output_signal[fx, :, ft] = self.fft_numpy(output_signal[fx, :, ft], fft_numpy=True)
+                output_signal[fx, :, ft] = self.fft_numpy(output_signal[fx, :, ft])
 
         for fy in range(width):
             for ft in range(frames):
-                output_signal[:, fy, ft] = self.fft_numpy(output_signal[:, fy, ft], fft_numpy=True)
+                output_signal[:, fy, ft] = self.fft_numpy(output_signal[:, fy, ft])
 
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=2, arr=output_signal) # time axis
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=1, arr=output_signal) # width axis
@@ -126,15 +126,15 @@ class FourierTransformer():
 
         for x in range(height):
             for y in range(width):
-                output_signal[x, y, :] = self.fft_numpy(output_signal[x, y, :], fft_numpy=True)
+                output_signal[x, y, :] = self.fft_numpy(output_signal[x, y, :])
 
         for x in range(height):
             for t in range(frames):
-                output_signal[x, :, t] = self.fft_numpy(output_signal[x, :, t], fft_numpy=True)
+                output_signal[x, :, t] = self.fft_numpy(output_signal[x, :, t])
 
         for y in range(width):
             for t in range(frames):
-                output_signal[:, y, t] = self.fft_numpy(output_signal[:, y, t], fft_numpy=True)
+                output_signal[:, y, t] = self.fft_numpy(output_signal[:, y, t])
         
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=2, arr=output_signal)  # time axis
         # output_signal = np.apply_along_axis(self.fft_numpy, axis=1, arr=output_signal)  # width axis
